@@ -8,7 +8,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Value
-class Book {
+public class Book {
     String id;
     String isbn;
     String title;
