@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CategoryTest {
     private static final String CATEGORY_ID = "CATEGORY_ID";
     private static final String CATEGORY_NAME = "CATEGORY_NAME";
+    public static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
+    public static final String THIRD_CATEGORY_NAME = "THIRD_CATEGORY_NAME";
 
     private Category category;
     private Category expectedCategory;
@@ -16,13 +18,11 @@ class CategoryTest {
     @BeforeEach
     void setUp() {
         Category secondCategory = Category.builder()
-                .id("2")
-                .name("CATEGORY2")
+                .name(SECOND_CATEGORY_NAME)
                 .build();
 
         Category thirdCategory = Category.builder()
-                .id("3")
-                .name("CATEGORY3")
+                .name(THIRD_CATEGORY_NAME)
                 .build();
 
         category = Category.builder()
@@ -35,9 +35,7 @@ class CategoryTest {
         expectedCategory = Category.builder()
                 .id(CATEGORY_ID)
                 .name(CATEGORY_NAME)
-                .subcategories(
-                        Lists.newArrayList(secondCategory, thirdCategory)
-                )
+                .subcategories(Lists.newArrayList(secondCategory, thirdCategory))
                 .build();
     }
 

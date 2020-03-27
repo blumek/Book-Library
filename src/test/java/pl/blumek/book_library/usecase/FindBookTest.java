@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FindBookTest {
     private static final String BOOK_ISBN = "BOOK_ISBN";
     private static final String BOOK_ID = "BOOK_ID";
+    public static final String BOOK_ANOTHER_ID = "BOOK_ANOTHER_ID";
     public static final String BOOK_TITLE = "BOOK_TITLE";
     public static final String ISBN_OR_ID_NOT_EXIST = "NOT_EXIST";
 
@@ -23,7 +24,7 @@ class FindBookTest {
     @BeforeEach
     void setUp() {
         bookWithIsbn = Book.builder()
-                .id("BOOK_ANOTHER_ID")
+                .id(BOOK_ANOTHER_ID)
                 .isbn(BOOK_ISBN)
                 .title(BOOK_TITLE)
                 .build();
@@ -40,18 +41,21 @@ class FindBookTest {
     @Test
     void findByIsbnTest_BookNotExist() {
         Optional<Book> book = findBook.findByIsbn(ISBN_OR_ID_NOT_EXIST);
+
         assertEquals(Optional.empty(), book);
     }
 
     @Test
     void findByIsbnTest_BookExists() {
         Optional<Book> book = findBook.findByIsbn(BOOK_ISBN);
+
         assertEquals(Optional.of(bookWithIsbn), book);
     }
 
     @Test
     void findByIsbnTest_BookWithoutIsbn() {
         Optional<Book> book = findBook.findByIsbn(BOOK_ID);
+
         assertEquals(Optional.of(bookWithoutIsbn), book);
     }
 }

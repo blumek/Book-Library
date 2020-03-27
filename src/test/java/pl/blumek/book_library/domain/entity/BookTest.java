@@ -18,6 +18,16 @@ class BookTest {
     private static final double BOOK_AVERAGE_RATING = 4.5;
     private static final String BOOK_THUMBNAIL_URL = "BOOK_THUMBNAIL_URL";
     private static final String BOOK_PREVIEW_LINK = "BOOK_PREVIEW_LINK";
+    private static final String LANGUAGE_FULL_NAME = "LANGUAGE_FULL_NAME";
+    private static final String LANGUAGE_SHORT_NAME = "LANGUAGE_SHORT_NAME";
+    private static final String FIRST_CATEGORY_NAME = "FIRST_CATEGORY_NAME";
+    private static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
+    private static final String PUBLISHER_FIRST_NAME = "PUBLISHER_FIRST_NAME";
+    private static final String PUBLISHER_LAST_NAME = "PUBLISHER_LAST_NAME";
+    private static final String FIRST_AUTHOR_FIRST_NAME = "FIRST_AUTHOR_FIRST_NAME";
+    private static final String FIRST_AUTHOR_LAST_NAME = "FIRST_AUTHOR_LAST_NAME";
+    private static final String SECOND_AUTHOR_LAST_NAME = "SECOND_AUTHOR_LAST_NAME";
+    private static final String SECOND_AUTHOR_FIRST_NAME = "SECOND_AUTHOR_FIRST_NAME";
 
     private Book book;
     private Book expectedBook;
@@ -25,42 +35,37 @@ class BookTest {
     @BeforeEach
     void setUp() {
         Language language = Language.builder()
-                .id("LANGUAGE_ID")
-                .fullName("LANGUAGE_FULL_NAME")
-                .shortName("LANGUAGE_SHORT_NAME")
+                .fullName(LANGUAGE_FULL_NAME)
+                .shortName(LANGUAGE_SHORT_NAME)
                 .build();
 
         Category firstCategory = Category.builder()
-                .id("CATEGORY_ID_1")
-                .name("CATEGORY_NAME_1")
+                .name(FIRST_CATEGORY_NAME)
                 .build();
 
         Category secondCategory = Category.builder()
-                .id("CATEGORY_ID_2")
-                .name("CATEGORY_NAME_2")
+                .name(SECOND_CATEGORY_NAME)
                 .build();
 
         Person publisher = Person.builder()
-                .id("PERSON_ID")
-                .firstName("FIRST_NAME")
-                .lastName("LAST_NAME")
+                .firstName(PUBLISHER_FIRST_NAME)
+                .lastName(PUBLISHER_LAST_NAME)
                 .build();
 
         Person firstAuthor = Person.builder()
-                .id("PERSON_ID_1")
-                .firstName("FIRST_NAME_1")
-                .lastName("LAST_NAME_1")
+                .firstName(FIRST_AUTHOR_FIRST_NAME)
+                .lastName(FIRST_AUTHOR_LAST_NAME)
                 .build();
 
         Person secondAuthor = Person.builder()
-                .id("PERSON_ID_2")
-                .firstName("FIRST_NAME_2")
-                .lastName("LAST_NAME_2")
+                .firstName(SECOND_AUTHOR_FIRST_NAME)
+                .lastName(SECOND_AUTHOR_LAST_NAME)
                 .build();
 
-        LocalDateTime date = LocalDateTime.of(2000, 10, 10, 10, 0, 0);
+        LocalDateTime date = LocalDateTime
+                .of(2000, 10, 10, 10, 0, 0);
 
-         book = Book.builder()
+        book = Book.builder()
                 .id(BOOK_ID)
                 .isbn(BOOK_ISBN)
                 .title(BOOK_TITLE)
@@ -79,26 +84,22 @@ class BookTest {
                 .author(secondAuthor)
                 .build();
 
-         expectedBook = Book.builder()
-                 .id(BOOK_ID)
-                 .isbn(BOOK_ISBN)
-                 .title(BOOK_TITLE)
-                 .subtitle(BOOK_SUBTITLE)
-                 .description(BOOK_DESCRIPTION)
-                 .language(language)
-                 .pageCount(BOOK_PAGE_COUNT)
-                 .averageRating(BOOK_AVERAGE_RATING)
-                 .thumbnailUrl(BOOK_THUMBNAIL_URL)
-                 .previewLink(BOOK_PREVIEW_LINK)
-                 .categories(
-                         Lists.newArrayList(firstCategory, secondCategory)
-                 )
-                 .publisher(publisher)
-                 .publishedDate(date)
-                 .authors(
-                         Lists.newArrayList(firstAuthor, secondAuthor)
-                 )
-                 .build();
+        expectedBook = Book.builder()
+                .id(BOOK_ID)
+                .isbn(BOOK_ISBN)
+                .title(BOOK_TITLE)
+                .subtitle(BOOK_SUBTITLE)
+                .description(BOOK_DESCRIPTION)
+                .language(language)
+                .pageCount(BOOK_PAGE_COUNT)
+                .averageRating(BOOK_AVERAGE_RATING)
+                .thumbnailUrl(BOOK_THUMBNAIL_URL)
+                .previewLink(BOOK_PREVIEW_LINK)
+                .categories(Lists.newArrayList(firstCategory, secondCategory))
+                .publisher(publisher)
+                .publishedDate(date)
+                .authors(Lists.newArrayList(firstAuthor, secondAuthor))
+                .build();
     }
 
     @Test

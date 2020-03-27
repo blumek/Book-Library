@@ -11,6 +11,5 @@ import java.util.List;
 public class Category {
     String id;
     String name;
-    @Singular
-    List<Category> subcategories;
+    @Singular List<Category> subcategories;
 }

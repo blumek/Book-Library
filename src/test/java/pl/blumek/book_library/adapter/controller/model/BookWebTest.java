@@ -21,6 +21,7 @@ class BookWebTest {
     private static final double BOOK_AVERAGE_RATING = 4.5;
     private static final String BOOK_THUMBNAIL_URL = "BOOK_THUMBNAIL_URL";
     private static final String BOOK_PREVIEW_LINK = "BOOK_PREVIEW_LINK";
+    private static final String LANGUAGE_FULL_NAME = "LANGUAGE_FULL_NAME";
     private static final String LANGUAGE_SHORT_NAME = "LANGUAGE_SHORT_NAME";
     private static final String FIRST_CATEGORY_NAME = "FIRST_CATEGORY_NAME";
     private static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
@@ -45,40 +46,35 @@ class BookWebTest {
     @BeforeEach
     void setUp() {
         Language language = Language.builder()
-                .id("LANGUAGE_ID")
-                .fullName("LANGUAGE_FULL_NAME")
+                .fullName(LANGUAGE_FULL_NAME)
                 .shortName(LANGUAGE_SHORT_NAME)
                 .build();
 
         Category firstCategory = Category.builder()
-                .id("CATEGORY_ID_1")
                 .name(FIRST_CATEGORY_NAME)
                 .build();
 
         Category secondCategory = Category.builder()
-                .id("CATEGORY_ID_2")
                 .name(SECOND_CATEGORY_NAME)
                 .build();
 
         Person publisher = Person.builder()
-                .id("PERSON_ID")
                 .firstName(PUBLISHER_FIRST_NAME)
                 .lastName(PUBLISHER_LAST_NAME)
                 .build();
 
         Person firstAuthor = Person.builder()
-                .id("PERSON_ID_1")
                 .firstName(FIRST_AUTHOR_FIRST_NAME)
                 .lastName(FIRST_AUTHOR_LAST_NAME)
                 .build();
 
         Person secondAuthor = Person.builder()
-                .id("PERSON_ID_2")
                 .firstName(SECOND_AUTHOR_FIRST_NAME)
                 .lastName(SECOND_AUTHOR_LAST_NAME)
                 .build();
 
-        LocalDateTime date = LocalDateTime.of(2011, 8, 28, 22, 0, 0);
+        LocalDateTime date = LocalDateTime
+                .of(2011, 8, 28, 22, 0, 0);
 
         book = Book.builder()
                 .id(BOOK_ID)
