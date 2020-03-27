@@ -8,7 +8,7 @@ import lombok.Value;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Value
-class Language {
+public class Language {
     String id;
     String fullName;
     String shortName;

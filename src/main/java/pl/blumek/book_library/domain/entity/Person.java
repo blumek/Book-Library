@@ -8,7 +8,7 @@ import lombok.Value;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Value
-class Person {
+public class Person {
     String id;
     String firstName;
     String lastName;

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,7 +58,7 @@ class BookTest {
                 .lastName("LAST_NAME_2")
                 .build();
 
-        LocalDate now = LocalDate.now();
+        LocalDateTime date = LocalDateTime.of(2000, 10, 10, 10, 0, 0);
 
          book = Book.builder()
                 .id(BOOK_ID)
@@ -74,7 +74,7 @@ class BookTest {
                 .category(firstCategory)
                 .category(secondCategory)
                 .publisher(publisher)
-                .publishedDate(now)
+                .publishedDate(date)
                 .author(firstAuthor)
                 .author(secondAuthor)
                 .build();
@@ -94,7 +94,7 @@ class BookTest {
                          Lists.newArrayList(firstCategory, secondCategory)
                  )
                  .publisher(publisher)
-                 .publishedDate(now)
+                 .publishedDate(date)
                  .authors(
                          Lists.newArrayList(firstAuthor, secondAuthor)
                  )

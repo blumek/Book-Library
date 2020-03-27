@@ -8,7 +8,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Value
-class Category {
+public class Category {
     String id;
     String name;
     @Singular
