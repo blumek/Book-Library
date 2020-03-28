@@ -4,10 +4,11 @@ import pl.blumek.book_library.domain.entity.Book;
 import pl.blumek.book_library.domain.port.BookRepository;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class InMemoryBookRepository implements BookRepository {
     private final Map<String, Book> inMemoryDb;
@@ -27,5 +28,13 @@ public class InMemoryBookRepository implements BookRepository {
         return inMemoryDb.values().stream()
                 .filter(book -> isbn.equals(book.getIsbn()))
                 .findAny();
+    }
+
+    @Override
+    public List<Book> findAllByCategoryName(String categoryName) {
+        return inMemoryDb.values().stream()
+                .filter(book -> book.getCategories().stream()
+                        .anyMatch(category -> categoryName.equals(category.getName())))
+                .collect(toList());
     }
 }

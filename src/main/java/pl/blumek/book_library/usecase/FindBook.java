@@ -3,6 +3,7 @@ package pl.blumek.book_library.usecase;
 import pl.blumek.book_library.domain.entity.Book;
 import pl.blumek.book_library.domain.port.BookRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FindBook {
@@ -17,5 +18,9 @@ public class FindBook {
         if (!book.isPresent())
             book = repository.findById(isbn);
         return book;
+    }
+
+    public List<Book> findAllByCategoryName(String categoryName) {
+        return repository.findAllByCategoryName(categoryName);
     }
 }
