@@ -33,7 +33,7 @@ public class SpringBookController {
     }
 
     @GetMapping("/books")
-    public List<BookWeb> findAll(@RequestParam String categoryName) {
+    public List<BookWeb> findAll(@RequestParam(value = "category") String categoryName) {
         return bookController.findAllByCategoryName(categoryName);
     }
 
