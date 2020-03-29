@@ -12,4 +12,8 @@ public class Person {
     String id;
     String firstName;
     String lastName;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

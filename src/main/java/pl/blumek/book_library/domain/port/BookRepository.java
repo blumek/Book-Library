@@ -9,4 +9,5 @@ public interface BookRepository {
     Optional<Book> findById(String id);
     Optional<Book> findByIsbn(String isbn);
     List<Book> findAllByCategoryName(String categoryName);
+    List<Book> findAllByAuthorName(String authorName);
 }
