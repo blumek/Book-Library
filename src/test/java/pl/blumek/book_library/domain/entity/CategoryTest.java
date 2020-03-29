@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CategoryTest {
     private static final String CATEGORY_ID = "CATEGORY_ID";
     private static final String CATEGORY_NAME = "CATEGORY_NAME";
-    public static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
-    public static final String THIRD_CATEGORY_NAME = "THIRD_CATEGORY_NAME";
+    private static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
+    private static final String THIRD_CATEGORY_NAME = "THIRD_CATEGORY_NAME";
 
     private Category category;
     private Category expectedCategory;

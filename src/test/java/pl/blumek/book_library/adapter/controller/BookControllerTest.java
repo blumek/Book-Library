@@ -17,9 +17,9 @@ import static org.mockito.Mockito.*;
 class BookControllerTest {
     private static final String BOOK_ISBN = "BOOK_ISBN";
     private static final String BOOK_TITLE = "BOOK_TITLE";
-    public static final String CATEGORY_NAME = "CATEGORY_NAME";
-    public static final String ANOTHER_BOOK_ISBN = "ANOTHER_BOOK_ISBN";
-    public static final String ANOTHER_BOOK_TITLE = "ANOTHER_BOOK_TITLE";
+    private static final String CATEGORY_NAME = "CATEGORY_NAME";
+    private static final String ANOTHER_BOOK_ISBN = "ANOTHER_BOOK_ISBN";
+    private static final String ANOTHER_BOOK_TITLE = "ANOTHER_BOOK_TITLE";
 
     private FindBook findBook;
     private BookController bookController;
