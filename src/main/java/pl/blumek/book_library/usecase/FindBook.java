@@ -6,7 +6,7 @@ import pl.blumek.book_library.domain.port.BookRepository;
 import java.util.List;
 import java.util.Optional;
 
-public final class FindBook {
+public class FindBook {
     private final BookRepository repository;
 
     public FindBook(BookRepository repository) {
