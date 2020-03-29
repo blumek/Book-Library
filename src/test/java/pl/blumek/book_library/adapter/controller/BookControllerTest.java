@@ -64,7 +64,7 @@ class BookControllerTest {
     }
 
     @Test
-    void findByIsbnTest_BookNotExist() {
+    void findByIsbnTest_BookNotExists() {
         when(findBook.findByIsbn(anyString()))
                 .thenReturn(Optional.empty());
 

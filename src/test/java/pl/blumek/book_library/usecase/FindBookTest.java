@@ -16,11 +16,13 @@ import static org.mockito.Mockito.*;
 
 class FindBookTest {
     private static final String BOOK_ISBN = "BOOK_ISBN";
+    private static final String BOOK_ISBN_NOT_EXISTS = "BOOK_ISBN_NOT_EXISTS";
     private static final String BOOK_ID = "BOOK_ID";
-    public static final String BOOK_ANOTHER_ID = "BOOK_ANOTHER_ID";
-    public static final String BOOK_TITLE = "BOOK_TITLE";
-    public static final String CATEGORY_NAME = "CATEGORY_NAME";
-    public static final String ANOTHER_CATEGORY_NAME = "ANOTHER_CATEGORY_NAME";
+    private static final String BOOK_ANOTHER_ID = "BOOK_ANOTHER_ID";
+    private static final String BOOK_TITLE = "BOOK_TITLE";
+    private static final String CATEGORY_NAME = "CATEGORY_NAME";
+    private static final String CATEGORY_NAME_NOT_EXISTS = "CATEGORY_NAME_NOT_EXISTS";
+    private static final String ANOTHER_CATEGORY_NAME = "ANOTHER_CATEGORY_NAME";
 
     private BookRepository repository;
     private FindBook findBook;
@@ -55,14 +57,14 @@ class FindBookTest {
     }
 
     @Test
-    void findByIsbnTest_BookNotExist() {
+    void findByIsbnTest_BookNotExists() {
         when(repository.findByIsbn(anyString()))
                 .thenReturn(Optional.empty());
 
         when(repository.findById(anyString()))
                 .thenReturn(Optional.empty());
 
-        Optional<Book> book = findBook.findByIsbn(anyString());
+        Optional<Book> book = findBook.findByIsbn(BOOK_ISBN_NOT_EXISTS);
 
         assertEquals(Optional.empty(), book);
     }
@@ -72,7 +74,7 @@ class FindBookTest {
         when(repository.findByIsbn(anyString()))
                 .thenReturn(Optional.of(bookWithIsbn));
 
-        Optional<Book> book = findBook.findByIsbn(anyString());
+        Optional<Book> book = findBook.findByIsbn(BOOK_ISBN);
 
         assertEquals(Optional.of(bookWithIsbn), book);
     }
@@ -85,7 +87,7 @@ class FindBookTest {
         when(repository.findById(anyString()))
                 .thenReturn(Optional.of(bookWithoutIsbn));
 
-        Optional<Book> book = findBook.findByIsbn(anyString());
+        Optional<Book> book = findBook.findByIsbn(BOOK_ID);
 
         assertEquals(Optional.of(bookWithoutIsbn), book);
     }
@@ -95,16 +97,17 @@ class FindBookTest {
         when(repository.findAllByCategoryName(anyString()))
                 .thenReturn(Lists.newArrayList(bookWithIsbn, bookWithoutIsbn));
 
-        List<Book> books = findBook.findAllByCategoryName(anyString());
+        List<Book> books = findBook.findAllByCategoryName(CATEGORY_NAME);
+
         assertEquals(Sets.newHashSet(bookWithIsbn, bookWithoutIsbn), Sets.newHashSet(books));
     }
 
     @Test
-    void findAllByCategoryName_BookWithGivenCategoryNotExist() {
+    void findAllByCategoryName_BooksWithGivenCategoryNotExist() {
         when(repository.findAllByCategoryName(anyString()))
                 .thenReturn(Lists.newArrayList());
 
-        List<Book> books = findBook.findAllByCategoryName(anyString());
+        List<Book> books = findBook.findAllByCategoryName(CATEGORY_NAME_NOT_EXISTS);
 
         assertEquals(Lists.newArrayList(), books);
     }
