@@ -8,7 +8,7 @@ import lombok.Value;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Value
-class AuthorRatingWeb {
+public class AuthorRatingWeb {
     String author;
     double averageRating;
 }
