@@ -99,7 +99,13 @@ class InMemoryBookRepositoryTest {
 
         repository = new InMemoryBookRepository(idGenerator, firstBook, secondBook, thirdBook);
 
-        assertEquals(Optional.of(thirdBook), repository.findById(GENERATED_ID));
+        Optional<Book> book = repository.findById(GENERATED_ID);
+
+        Book expectedBook = thirdBook.toBuilder()
+                .id(GENERATED_ID)
+                .build();
+
+        assertEquals(Optional.of(expectedBook), book);
     }
 
     @Test

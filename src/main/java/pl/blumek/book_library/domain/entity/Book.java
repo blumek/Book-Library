@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Value
 public class Book {
     String id;

@@ -25,7 +25,14 @@ public final class InMemoryBookRepository implements BookRepository {
     public InMemoryBookRepository(IdGenerator idGenerator, Stream<Book> bookStream) {
         this.idGenerator = idGenerator;
         this.inMemoryDb = bookStream
-                .collect(toMap(this::getId, book -> book));
+                .map(this::bookWithAssignedId)
+                .collect(toMap(Book::getId, book -> book));
+    }
+
+    private Book bookWithAssignedId(Book book) {
+        return book.toBuilder()
+                .id(getId(book))
+                .build();
     }
 
     private String getId(Book book) {
