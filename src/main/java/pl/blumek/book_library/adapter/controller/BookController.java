@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 public class BookController {
-    private FindBook findBook;
+    private final FindBook findBook;
 
     public BookController(FindBook findBook) {
         this.findBook = findBook;
