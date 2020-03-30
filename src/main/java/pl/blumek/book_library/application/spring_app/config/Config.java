@@ -2,12 +2,16 @@ package pl.blumek.book_library.application.spring_app.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.blumek.book_library.adapter.controller.BookController;
+import pl.blumek.book_library.adapter.id_generator.UUIDGenerator;
 import pl.blumek.book_library.adapter.repository.InMemoryBookRepository;
 import pl.blumek.book_library.domain.port.BookRepository;
 import pl.blumek.book_library.usecase.FindBook;
+
+import java.util.UUID;
 
 @Configuration
 class Config {
@@ -32,6 +36,6 @@ class Config {
 
     @Bean
     BookRepository bookRepository() {
-        return new InMemoryBookRepository();
+        return new InMemoryBookRepository(UUIDGenerator.create());
     }
 }

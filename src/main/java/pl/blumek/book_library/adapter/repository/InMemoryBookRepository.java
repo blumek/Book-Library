@@ -1,23 +1,35 @@
 package pl.blumek.book_library.adapter.repository;
 
 import pl.blumek.book_library.domain.entity.Book;
-import pl.blumek.book_library.domain.entity.Person;
 import pl.blumek.book_library.domain.port.BookRepository;
+import pl.blumek.book_library.domain.port.IdGenerator;
 
 import java.util.*;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-public class InMemoryBookRepository implements BookRepository {
+public final class InMemoryBookRepository implements BookRepository {
     private final Map<String, Book> inMemoryDb;
+    private final IdGenerator idGenerator;
 
-    public InMemoryBookRepository(Book... books) {
-        this.inMemoryDb = Arrays.stream(books)
+    public InMemoryBookRepository(IdGenerator idGenerator, Book... books) {
+        this(idGenerator, Arrays.stream(books));
+    }
+
+    public InMemoryBookRepository(IdGenerator idGenerator, List<Book> books) {
+        this(idGenerator, books.stream());
+    }
+
+    public InMemoryBookRepository(IdGenerator idGenerator, Stream<Book> bookStream) {
+        this.idGenerator = idGenerator;
+        this.inMemoryDb = bookStream
                 .collect(toMap(this::getId, book -> book));
     }
 
     private String getId(Book book) {
-        return hasId(book) ? book.getId() : UUID.randomUUID().toString();
+        return hasId(book) ? book.getId() : idGenerator.generate();
     }
 
     private boolean hasId(Book book) {
