@@ -4,10 +4,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.blumek.book_library.adapter.average_rating.ArithmeticMeanAverageRating;
 import pl.blumek.book_library.adapter.controller.BookController;
+import pl.blumek.book_library.adapter.controller.RatingController;
 import pl.blumek.book_library.adapter.id_generator.UUIDGenerator;
+import pl.blumek.book_library.adapter.repository.InMemoryAuthorRepository;
 import pl.blumek.book_library.adapter.repository.InMemoryBookRepository;
+import pl.blumek.book_library.domain.port.AuthorRepository;
+import pl.blumek.book_library.domain.port.AverageRating;
 import pl.blumek.book_library.domain.port.BookRepository;
+import pl.blumek.book_library.domain.port.IdGenerator;
+import pl.blumek.book_library.usecase.FindAuthorRating;
 import pl.blumek.book_library.usecase.FindBook;
 
 
@@ -28,12 +35,37 @@ class Config {
     }
 
     @Bean
+    RatingController ratingController() {
+        return new RatingController(findAuthorRating());
+    }
+
+    @Bean
     FindBook findBook() {
         return new FindBook(bookRepository());
     }
 
     @Bean
+    FindAuthorRating findAuthorRating() {
+        return new FindAuthorRating(authorRepository(), bookRepository(), averageRating());
+    }
+
+    @Bean
     BookRepository bookRepository() {
-        return new InMemoryBookRepository(UUIDGenerator.create());
+        return new InMemoryBookRepository(idGenerator());
+    }
+
+    @Bean
+    AuthorRepository authorRepository() {
+        return new InMemoryAuthorRepository(idGenerator());
+    }
+
+    @Bean
+    IdGenerator idGenerator() {
+        return UUIDGenerator.create();
+    }
+
+    @Bean
+    AverageRating averageRating() {
+        return new ArithmeticMeanAverageRating();
     }
 }
