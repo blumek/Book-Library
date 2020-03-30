@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Value;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Value
 public class Person {
     String id;
