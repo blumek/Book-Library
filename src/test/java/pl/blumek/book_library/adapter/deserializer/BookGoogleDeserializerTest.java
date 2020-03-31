@@ -10,9 +10,9 @@ import pl.blumek.book_library.domain.entity.Category;
 import pl.blumek.book_library.domain.entity.Language;
 import pl.blumek.book_library.domain.entity.Person;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookGoogleDeserializerTest {
     private static final String ID = "ID";
@@ -78,7 +78,7 @@ class BookGoogleDeserializerTest {
                 "   }\n" +
                 "}";
 
-        LocalDateTime publishedDate = LocalDateTime.of(2004, 4, 1, 0, 0, 0);
+        LocalDate publishedDate = LocalDate.of(2004, 4, 1);
 
         expectedBook = Book.builder()
                 .id(ID)
@@ -250,7 +250,7 @@ class BookGoogleDeserializerTest {
         Book book = objectMapper.readValue(json, Book.class);
 
         expectedBook = Book.builder()
-                .publishedDate(LocalDateTime.of(2004, 4, 5, 0, 0, 0))
+                .publishedDate(LocalDate.of(2004, 4, 5))
                 .build();
 
         assertEquals(expectedBook, book);
@@ -267,7 +267,7 @@ class BookGoogleDeserializerTest {
         Book book = objectMapper.readValue(json, Book.class);
 
         expectedBook = Book.builder()
-                .publishedDate(LocalDateTime.of(2004, 4, 1, 0, 0, 0))
+                .publishedDate(LocalDate.of(2004, 4, 1))
                 .build();
 
         assertEquals(expectedBook, book);
@@ -284,7 +284,7 @@ class BookGoogleDeserializerTest {
         Book book = objectMapper.readValue(json, Book.class);
 
         expectedBook = Book.builder()
-                .publishedDate(LocalDateTime.of(2004, 1, 1, 0, 0, 0))
+                .publishedDate(LocalDate.of(2004, 1, 1))
                 .build();
 
         assertEquals(expectedBook, book);

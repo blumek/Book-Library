@@ -6,12 +6,12 @@ import pl.blumek.book_library.domain.entity.Category;
 import pl.blumek.book_library.domain.entity.Language;
 import pl.blumek.book_library.domain.entity.Person;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -60,9 +60,9 @@ public class BookWeb {
         return publisher == null ? null : getAuthorName(publisher);
     }
 
-    private static Long getPublishedDate(LocalDateTime publishedDate) {
+    private static Long getPublishedDate(LocalDate publishedDate) {
         return publishedDate == null ? null : publishedDate
-                .atZone(ZoneOffset.UTC)
+                .atStartOfDay(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();
     }

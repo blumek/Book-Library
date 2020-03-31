@@ -7,7 +7,7 @@ import pl.blumek.book_library.domain.entity.Category;
 import pl.blumek.book_library.domain.entity.Language;
 import pl.blumek.book_library.domain.entity.Person;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +28,7 @@ class BookWebTest {
     private static final String PUBLISHER_FIRST_NAME = "PUBLISHER_FIRST_NAME";
     private static final String PUBLISHER_LAST_NAME = "PUBLISHER_LAST_NAME";
     private static final String PUBLISHER = PUBLISHER_FIRST_NAME + " " + PUBLISHER_LAST_NAME;
-    private static final long PUBLISHED_DATE = Long.parseLong("1314568800000");
+    private static final long PUBLISHED_DATE = 1314568800000L;
     private static final String FIRST_AUTHOR_FIRST_NAME = "FIRST_AUTHOR_FIRST_NAME";
     private static final String FIRST_AUTHOR_LAST_NAME = "FIRST_AUTHOR_LAST_NAME";
     private static final String FIRST_AUTHOR = FIRST_AUTHOR_FIRST_NAME + " " + FIRST_AUTHOR_LAST_NAME;
@@ -73,8 +73,7 @@ class BookWebTest {
                 .lastName(SECOND_AUTHOR_LAST_NAME)
                 .build();
 
-        LocalDateTime date = LocalDateTime
-                .of(2011, 8, 28, 22, 0, 0);
+        LocalDate date = LocalDate.of(2011, 8, 29);
 
         book = Book.builder()
                 .id(BOOK_ID)

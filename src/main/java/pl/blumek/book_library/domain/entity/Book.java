@@ -2,7 +2,7 @@ package pl.blumek.book_library.domain.entity;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -14,7 +14,7 @@ public class Book {
     String title;
     String subtitle;
     Person publisher;
-    LocalDateTime publishedDate;
+    LocalDate publishedDate;
     String description;
     int pageCount;
     String thumbnailUrl;

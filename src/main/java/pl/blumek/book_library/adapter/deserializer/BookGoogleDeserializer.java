@@ -11,7 +11,7 @@ import pl.blumek.book_library.domain.entity.Language;
 import pl.blumek.book_library.domain.entity.Person;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -69,7 +69,7 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
             Optional<Person> publisher = getPublisher(contentNode.get());
             publisher.ifPresent(bookBuilder::publisher);
 
-            Optional<LocalDateTime> date = getPublishedDate(contentNode.get());
+            Optional<LocalDate> date = getPublishedDate(contentNode.get());
             date.ifPresent(bookBuilder::publishedDate);
 
             Optional<String> description = getDescription(contentNode.get());
@@ -132,7 +132,8 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
     }
 
     private boolean isIsbn(JsonNode idTypeNode) {
-        return idTypeNode != null && idTypeNode.textValue().equals(ISBN);
+        return idTypeNode != null && idTypeNode.textValue() != null
+                && idTypeNode.textValue().equals(ISBN);
     }
 
     private Optional<String> getTitle(JsonNode contentNode) {
@@ -161,7 +162,7 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
                 .build());
     }
 
-    private Optional<LocalDateTime> getPublishedDate(JsonNode contentNode) {
+    private Optional<LocalDate> getPublishedDate(JsonNode contentNode) {
         JsonNode publishedDateNode = contentNode.get(PUBLISHED_DATE_NODE_NAME);
         if (publishedDateNode == null)
             return Optional.empty();
@@ -169,7 +170,7 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
         return getDateFrom(publishedDateNode.textValue());
     }
 
-    private Optional<LocalDateTime> getDateFrom(String publishedDateNode) {
+    private Optional<LocalDate> getDateFrom(String publishedDateNode) {
         if (publishedDateNode == null)
             return Optional.empty();
 
@@ -183,12 +184,9 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
                 .optionalEnd()
                 .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
                 .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-                .parseDefaulting(ChronoField.CLOCK_HOUR_OF_DAY, 0)
-                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter();
 
-        return Optional.of(LocalDateTime.parse(publishedDateNode, formatter));
+        return Optional.of(LocalDate.parse(publishedDateNode, formatter));
     }
 
     private Optional<String> getDescription(JsonNode contentNode) {

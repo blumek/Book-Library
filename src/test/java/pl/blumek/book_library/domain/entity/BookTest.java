@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookTest {
     private static final String BOOK_ID = "BOOK_ID";
@@ -62,8 +62,7 @@ class BookTest {
                 .lastName(SECOND_AUTHOR_LAST_NAME)
                 .build();
 
-        LocalDateTime date = LocalDateTime
-                .of(2000, 10, 10, 10, 0, 0);
+        LocalDate date = LocalDate.of(2000, 10, 10);
 
         book = Book.builder()
                 .id(BOOK_ID)
