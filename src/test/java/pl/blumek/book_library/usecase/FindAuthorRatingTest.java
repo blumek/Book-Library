@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.domain.entity.Book;
 import pl.blumek.book_library.domain.entity.Person;
 import pl.blumek.book_library.domain.port.AuthorRepository;
-import pl.blumek.book_library.domain.port.AverageRating;
+import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 import pl.blumek.book_library.domain.port.BookRepository;
 
 import java.util.Map;
@@ -30,7 +30,7 @@ class FindAuthorRatingTest {
     private BookRepository bookRepository;
     private AuthorRepository authorRepository;
     private FindAuthorRating findAuthorRating;
-    private AverageRating averageRating;
+    private AverageRatingCalculator averageRatingCalculator;
 
     private Person firstAuthor;
     private Person secondAuthor;
@@ -45,9 +45,9 @@ class FindAuthorRatingTest {
     void setUp() {
         bookRepository = mock(BookRepository.class);
         authorRepository = mock(AuthorRepository.class);
-        averageRating = mock(AverageRating.class);
+        averageRatingCalculator = mock(AverageRatingCalculator.class);
 
-        findAuthorRating = new FindAuthorRating(authorRepository, bookRepository, averageRating);
+        findAuthorRating = new FindAuthorRating(authorRepository, bookRepository, averageRatingCalculator);
 
         firstAuthor = Person.builder()
                 .firstName(FIRST_AUTHOR_FIRST_NAME)
@@ -90,10 +90,10 @@ class FindAuthorRatingTest {
         when(bookRepository.findAllByAuthorName(secondAuthor.getFullName()))
                 .thenReturn(Lists.newArrayList(thirdBook));
 
-        when(averageRating.getAverageRatingOf(Lists.newArrayList(FIRST_BOOK_AVERAGE_RATING, SECOND_BOOK_AVERAGE_RATING)))
+        when(averageRatingCalculator.calculate(Lists.newArrayList(FIRST_BOOK_AVERAGE_RATING, SECOND_BOOK_AVERAGE_RATING)))
                 .thenReturn(FIRST_AUTHOR_AVERAGE_RATING);
 
-        when(averageRating.getAverageRatingOf(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
+        when(averageRatingCalculator.calculate(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
                 .thenReturn(SECOND_AUTHOR_AVERAGE_RATING);
 
         Map<Person, Double> authorRatings = findAuthorRating.findAllAuthorRatings();
@@ -113,7 +113,7 @@ class FindAuthorRatingTest {
         when(bookRepository.findAllByAuthorName(secondAuthor.getFullName()))
                 .thenReturn(Lists.newArrayList(thirdBook, bookWithoutAverageRating));
 
-        when(averageRating.getAverageRatingOf(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
+        when(averageRatingCalculator.calculate(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
                 .thenReturn(SECOND_AUTHOR_AVERAGE_RATING);
 
         Map<Person, Double> authorRatings = findAuthorRating.findAllAuthorRatings();

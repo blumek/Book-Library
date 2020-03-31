@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArithmeticMeanAverageRatingTest {
-    private ArithmeticMeanAverageRating arithmeticMeanAverageRating;
+class ArithmeticMeanAverageRatingCalculatorTest {
+    private ArithmeticMeanAverageRatingCalculator arithmeticMeanAverageRating;
 
     @BeforeEach
     void setUp() {
-        arithmeticMeanAverageRating = new ArithmeticMeanAverageRating();
+        arithmeticMeanAverageRating = new ArithmeticMeanAverageRatingCalculator();
     }
 
     @Test
     void getAverageRatingOfTest_fourRatings() {
-        double averageRating = arithmeticMeanAverageRating.getAverageRatingOf(
+        double averageRating = arithmeticMeanAverageRating.calculate(
                 Lists.newArrayList(1.0, 2.0, 3.0, 4.0));
 
         assertEquals(2.5, averageRating);
@@ -25,6 +25,6 @@ class ArithmeticMeanAverageRatingTest {
     @Test
     void getAverageRatingOfTest_emptyList() {
         assertThrows(IllegalArgumentException.class,
-                () ->  arithmeticMeanAverageRating.getAverageRatingOf(Lists.newArrayList()));
+                () ->  arithmeticMeanAverageRating.calculate(Lists.newArrayList()));
     }
 }

@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import pl.blumek.book_library.domain.entity.Book;
 import pl.blumek.book_library.domain.entity.Person;
 import pl.blumek.book_library.domain.port.AuthorRepository;
-import pl.blumek.book_library.domain.port.AverageRating;
+import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 import pl.blumek.book_library.domain.port.BookRepository;
 
 import java.util.HashMap;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 public final class FindAuthorRating {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-    private final AverageRating averageRatingCalculator;
+    private final AverageRatingCalculator averageRatingCalculator;
 
     public FindAuthorRating(AuthorRepository authorRepository, BookRepository bookRepository,
-                            AverageRating averageRating) {
+                            AverageRatingCalculator averageRatingCalculator) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
-        this.averageRatingCalculator = averageRating;
+        this.averageRatingCalculator = averageRatingCalculator;
     }
 
     public Map<Person, Double> findAllAuthorRatings() {
@@ -46,7 +46,7 @@ public final class FindAuthorRating {
             return OptionalDouble.empty();
 
         List<Double> ratingsOfBooks = getAllBookAverageRatings(authorBooks);
-        return OptionalDouble.of(averageRatingCalculator.getAverageRatingOf(ratingsOfBooks));
+        return OptionalDouble.of(averageRatingCalculator.calculate(ratingsOfBooks));
     }
 
     private List<Book> getAllAuthorBooks(Person author) {

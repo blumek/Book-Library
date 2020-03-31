@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.blumek.book_library.adapter.average_rating.ArithmeticMeanAverageRating;
+import pl.blumek.book_library.adapter.average_rating.ArithmeticMeanAverageRatingCalculator;
 import pl.blumek.book_library.adapter.controller.BookController;
 import pl.blumek.book_library.adapter.controller.RatingController;
 import pl.blumek.book_library.adapter.id_generator.UUIDGenerator;
 import pl.blumek.book_library.adapter.repository.InMemoryAuthorRepository;
 import pl.blumek.book_library.adapter.repository.InMemoryBookRepository;
 import pl.blumek.book_library.domain.port.AuthorRepository;
-import pl.blumek.book_library.domain.port.AverageRating;
+import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 import pl.blumek.book_library.domain.port.BookRepository;
 import pl.blumek.book_library.domain.port.IdGenerator;
 import pl.blumek.book_library.usecase.FindAuthorRating;
@@ -65,7 +65,7 @@ class Config {
     }
 
     @Bean
-    AverageRating averageRating() {
-        return new ArithmeticMeanAverageRating();
+    AverageRatingCalculator averageRating() {
+        return new ArithmeticMeanAverageRatingCalculator();
     }
 }

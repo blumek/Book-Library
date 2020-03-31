@@ -1,13 +1,13 @@
 package pl.blumek.book_library.adapter.average_rating;
 
-import pl.blumek.book_library.domain.port.AverageRating;
+import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 
 import java.util.Collection;
 
-public class ArithmeticMeanAverageRating implements AverageRating {
+public class ArithmeticMeanAverageRatingCalculator implements AverageRatingCalculator {
 
     @Override
-    public double getAverageRatingOf(Collection<Double> ratings) {
+    public double calculate(Collection<Double> ratings) {
         if (ratings.isEmpty())
             throw new IllegalArgumentException("Empty lists passed");
 
