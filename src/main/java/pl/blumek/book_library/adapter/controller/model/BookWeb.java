@@ -39,7 +39,7 @@ public class BookWeb {
                 .isbn(getIsbn(book))
                 .title(book.getTitle())
                 .subtitle(book.getSubtitle())
-                .publisher(getPublisher(book.getPublisher()))
+                .publisher(book.getPublisher())
                 .publishedDate(getPublishedDate(book.getPublishedDate()))
                 .description(book.getDescription())
                 .pageCount(book.getPageCount())
@@ -54,10 +54,6 @@ public class BookWeb {
 
     private static String getIsbn(Book book) {
         return book.getIsbn() == null ? book.getId() : book.getIsbn();
-    }
-
-    private static String getPublisher(Person publisher) {
-        return publisher == null ? null : getAuthorName(publisher);
     }
 
     private static Long getPublishedDate(LocalDate publishedDate) {

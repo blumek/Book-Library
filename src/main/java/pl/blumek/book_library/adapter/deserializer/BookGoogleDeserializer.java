@@ -66,7 +66,7 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
             Optional<String> subtitle = getSubtitle(contentNode.get());
             subtitle.ifPresent(bookBuilder::subtitle);
 
-            Optional<Person> publisher = getPublisher(contentNode.get());
+            Optional<String> publisher = getPublisher(contentNode.get());
             publisher.ifPresent(bookBuilder::publisher);
 
             Optional<LocalDate> date = getPublishedDate(contentNode.get());
@@ -152,14 +152,12 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
         return Optional.of(subtitleNode.textValue());
     }
 
-    private Optional<Person> getPublisher(JsonNode contentNode) {
+    private Optional<String> getPublisher(JsonNode contentNode) {
         JsonNode publisherNode = contentNode.get(PUBLISHER_NODE_NAME);
         if (publisherNode == null)
             return Optional.empty();
 
-        return Optional.of(Person.builder()
-                .firstName(publisherNode.textValue())
-                .build());
+        return Optional.of(publisherNode.textValue());
     }
 
     private Optional<LocalDate> getPublishedDate(JsonNode contentNode) {

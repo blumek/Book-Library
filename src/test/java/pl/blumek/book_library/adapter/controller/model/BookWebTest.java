@@ -25,9 +25,7 @@ class BookWebTest {
     private static final String LANGUAGE_SHORT_NAME = "LANGUAGE_SHORT_NAME";
     private static final String FIRST_CATEGORY_NAME = "FIRST_CATEGORY_NAME";
     private static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
-    private static final String PUBLISHER_FIRST_NAME = "PUBLISHER_FIRST_NAME";
-    private static final String PUBLISHER_LAST_NAME = "PUBLISHER_LAST_NAME";
-    private static final String PUBLISHER = PUBLISHER_FIRST_NAME + " " + PUBLISHER_LAST_NAME;
+    private static final String PUBLISHER = "PUBLISHER";
     private static final long PUBLISHED_DATE = 1314568800000L;
     private static final String FIRST_AUTHOR_FIRST_NAME = "FIRST_AUTHOR_FIRST_NAME";
     private static final String FIRST_AUTHOR_LAST_NAME = "FIRST_AUTHOR_LAST_NAME";
@@ -58,11 +56,6 @@ class BookWebTest {
                 .name(SECOND_CATEGORY_NAME)
                 .build();
 
-        Person publisher = Person.builder()
-                .firstName(PUBLISHER_FIRST_NAME)
-                .lastName(PUBLISHER_LAST_NAME)
-                .build();
-
         Person firstAuthor = Person.builder()
                 .firstName(FIRST_AUTHOR_FIRST_NAME)
                 .lastName(FIRST_AUTHOR_LAST_NAME)
@@ -88,7 +81,7 @@ class BookWebTest {
                 .previewLink(BOOK_PREVIEW_LINK)
                 .category(firstCategory)
                 .category(secondCategory)
-                .publisher(publisher)
+                .publisher(PUBLISHER)
                 .publishedDate(date)
                 .author(firstAuthor)
                 .author(secondAuthor)

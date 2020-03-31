@@ -13,7 +13,7 @@ public class Book {
     String isbn;
     String title;
     String subtitle;
-    Person publisher;
+    String publisher;
     LocalDate publishedDate;
     String description;
     int pageCount;

@@ -85,9 +85,7 @@ class BookGoogleDeserializerTest {
                 .isbn(ISBN)
                 .title(TITLE)
                 .subtitle(SUBTITLE)
-                .publisher(Person.builder()
-                        .firstName(PUBLISHER)
-                        .build())
+                .publisher(PUBLISHER)
                 .publishedDate(publishedDate)
                 .description(DESCRIPTION)
                 .pageCount(PAGE_COUNT)
@@ -231,9 +229,7 @@ class BookGoogleDeserializerTest {
         Book book = objectMapper.readValue(json, Book.class);
 
         expectedBook = Book.builder()
-                .publisher(Person.builder()
-                        .firstName(PUBLISHER)
-                        .build())
+                .publisher(PUBLISHER)
                 .build();
 
         assertEquals(expectedBook, book);

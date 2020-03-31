@@ -22,8 +22,7 @@ class BookTest {
     private static final String LANGUAGE_SHORT_NAME = "LANGUAGE_SHORT_NAME";
     private static final String FIRST_CATEGORY_NAME = "FIRST_CATEGORY_NAME";
     private static final String SECOND_CATEGORY_NAME = "SECOND_CATEGORY_NAME";
-    private static final String PUBLISHER_FIRST_NAME = "PUBLISHER_FIRST_NAME";
-    private static final String PUBLISHER_LAST_NAME = "PUBLISHER_LAST_NAME";
+    private static final String PUBLISHER = "PUBLISHER";
     private static final String FIRST_AUTHOR_FIRST_NAME = "FIRST_AUTHOR_FIRST_NAME";
     private static final String FIRST_AUTHOR_LAST_NAME = "FIRST_AUTHOR_LAST_NAME";
     private static final String SECOND_AUTHOR_LAST_NAME = "SECOND_AUTHOR_LAST_NAME";
@@ -45,11 +44,6 @@ class BookTest {
 
         Category secondCategory = Category.builder()
                 .name(SECOND_CATEGORY_NAME)
-                .build();
-
-        Person publisher = Person.builder()
-                .firstName(PUBLISHER_FIRST_NAME)
-                .lastName(PUBLISHER_LAST_NAME)
                 .build();
 
         Person firstAuthor = Person.builder()
@@ -77,7 +71,7 @@ class BookTest {
                 .previewLink(BOOK_PREVIEW_LINK)
                 .category(firstCategory)
                 .category(secondCategory)
-                .publisher(publisher)
+                .publisher(PUBLISHER)
                 .publishedDate(date)
                 .author(firstAuthor)
                 .author(secondAuthor)
@@ -95,7 +89,7 @@ class BookTest {
                 .thumbnailUrl(BOOK_THUMBNAIL_URL)
                 .previewLink(BOOK_PREVIEW_LINK)
                 .categories(Lists.newArrayList(firstCategory, secondCategory))
-                .publisher(publisher)
+                .publisher(PUBLISHER)
                 .publishedDate(date)
                 .authors(Lists.newArrayList(firstAuthor, secondAuthor))
                 .build();
