@@ -46,6 +46,9 @@ public final class FindAuthorRating {
             return OptionalDouble.empty();
 
         List<Double> ratingsOfBooks = getAllBookAverageRatings(authorBooks);
+        if (ratingsOfBooks.isEmpty())
+            return OptionalDouble.empty();
+
         return OptionalDouble.of(averageRatingCalculator.calculate(ratingsOfBooks));
     }
 

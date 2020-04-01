@@ -111,6 +111,18 @@ class FindAuthorRatingTest {
                 .thenReturn(Lists.newArrayList(secondAuthor));
 
         when(bookRepository.findAllByAuthorName(secondAuthor.getFullName()))
+                .thenReturn(Lists.newArrayList(bookWithoutAverageRating));
+
+        Map<Person, Double> expectedAuthorsRatings = Maps.newHashMap();
+        assertEquals(expectedAuthorsRatings, findAuthorRating.findAllAuthorRatings());
+    }
+
+    @Test
+    void findAllAuthorRatingsTest_AuthorWithBookWithRatingAndWithBookWithoutRating() {
+        when(authorRepository.findAll())
+                .thenReturn(Lists.newArrayList(secondAuthor));
+
+        when(bookRepository.findAllByAuthorName(secondAuthor.getFullName()))
                 .thenReturn(Lists.newArrayList(thirdBook, bookWithoutAverageRating));
 
         when(averageRatingCalculator.calculate(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
