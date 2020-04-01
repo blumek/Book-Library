@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class AuthorsArrayDeserializer extends StdDeserializer<List<Person>> {
+public class AuthorsArrayFromBookGoogleDeserializer extends StdDeserializer<List<Person>> {
+    private static final String CONTENT_NODE_NAME = "volumeInfo";
+    private static final String AUTHORS_NODE_NAME = "authors";
 
-    public AuthorsArrayDeserializer(Class<?> vc) {
+    public AuthorsArrayFromBookGoogleDeserializer(Class<?> vc) {
         super(vc);
     }
 
@@ -23,8 +25,26 @@ public class AuthorsArrayDeserializer extends StdDeserializer<List<Person>> {
         return getDeserializedAuthors(rootNode);
     }
 
-    private List<Person> getDeserializedAuthors(JsonNode authorsNode) {
+    private List<Person> getDeserializedAuthors(JsonNode rootNode) {
         List<Person> authors = Lists.newArrayList();
+
+        Optional<JsonNode> contentNode = getContentNode(rootNode);
+        contentNode.ifPresent(jsonNode -> authors.addAll(getAuthors(jsonNode)));
+
+        return authors;
+    }
+
+    private Optional<JsonNode> getContentNode(JsonNode node) {
+        return Optional.ofNullable(node.get(CONTENT_NODE_NAME));
+    }
+
+    private List<Person> getAuthors(JsonNode contentNode) {
+        List<Person> authors = Lists.newArrayList();
+
+        JsonNode authorsNode = contentNode.get(AUTHORS_NODE_NAME);
+        if (authorsNode == null)
+            return authors;
+
         for (JsonNode authorNode : authorsNode) {
             Optional<Person> author = getAuthor(authorNode);
             author.ifPresent(authors::add);
@@ -78,4 +98,5 @@ public class AuthorsArrayDeserializer extends StdDeserializer<List<Person>> {
     private String getRestOfName(String lastName) {
         return lastName.substring(lastName.indexOf(' ')).trim();
     }
+
 }

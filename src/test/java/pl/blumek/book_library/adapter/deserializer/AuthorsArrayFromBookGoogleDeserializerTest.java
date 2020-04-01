@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AuthorsArrayDeserializerTest {
+class AuthorsArrayFromBookGoogleDeserializerTest {
     private static final String FIRST_AUTHOR_FIRST_NAME = "FIRST_AUTHOR_FIRST_NAME";
     private static final String FIRST_AUTHOR_LAST_NAME = "FIRST_AUTHOR_LAST_NAME";
     private static final String SECOND_AUTHOR_FIRST_NAME = "SECOND_AUTHOR_FIRST_NAME";
@@ -30,15 +30,19 @@ class AuthorsArrayDeserializerTest {
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        AuthorsArrayDeserializer deserializer = new AuthorsArrayDeserializer(List.class);
+        AuthorsArrayFromBookGoogleDeserializer deserializer = new AuthorsArrayFromBookGoogleDeserializer(List.class);
         SimpleModule module = new SimpleModule();
         module.addDeserializer(List.class, deserializer);
         objectMapper.registerModule(module);
 
-        json = "[\n" +
-                "  \"" + FIRST_AUTHOR_FIRST_NAME + " " + FIRST_AUTHOR_LAST_NAME + "\",\n" +
-                "  \"" + SECOND_AUTHOR_FIRST_NAME+ " " + SECOND_AUTHOR_LAST_NAME+ "\"\n" +
-                "]";
+        json = "{\n" +
+                "   \"volumeInfo\": {\n" +
+                "    \"authors\": [\n" +
+                "     \"" + FIRST_AUTHOR_FIRST_NAME + " " + FIRST_AUTHOR_LAST_NAME + "\",\n" +
+                "     \"" + SECOND_AUTHOR_FIRST_NAME + " " + SECOND_AUTHOR_LAST_NAME + "\"\n" +
+                "    ]\n" +
+                "   }\n" +
+                "}";
 
         firstAuthor = Person.builder()
                 .firstName(FIRST_AUTHOR_FIRST_NAME)
@@ -65,7 +69,26 @@ class AuthorsArrayDeserializerTest {
 
     @Test
     void deserializeTest_EmptyCollection() throws JsonProcessingException {
-        json = "[]";
+        json = "{\n" +
+                "   \"volumeInfo\": {\n" +
+                "    \"authors\": [\n" +
+                "    \n" +
+                "    ]\n" +
+                "   }\n" +
+                "}";
+
+        JavaType authorList = objectMapper.getTypeFactory().constructCollectionType(List.class, Person.class);
+        List<Person> authors = objectMapper.readValue(json, authorList);
+
+        assertEquals(Lists.newArrayList(), authors);
+    }
+
+    @Test
+    void deserializeTest_NoCollection() throws JsonProcessingException {
+        json = "{\n" +
+                "   \"volumeInfo\": {\n" +
+                "   }\n" +
+                "}";
 
         JavaType authorList = objectMapper.getTypeFactory().constructCollectionType(List.class, Person.class);
         List<Person> authors = objectMapper.readValue(json, authorList);
@@ -75,9 +98,13 @@ class AuthorsArrayDeserializerTest {
 
     @Test
     void deserializeTest_AuthorWithOnlyFirstName() throws JsonProcessingException {
-        json = "[\n" +
-                "  \"" + FIRST_AUTHOR_FIRST_NAME + "\"\n" +
-                "]";
+        json = "{\n" +
+                "   \"volumeInfo\": {\n" +
+                "    \"authors\": [\n" +
+                "     \"" + FIRST_AUTHOR_FIRST_NAME + " \"\n" +
+                "    ]\n" +
+                "   }\n" +
+                "}";
 
         JavaType authorList = objectMapper.getTypeFactory().constructCollectionType(List.class, Person.class);
         List<Person> authors = objectMapper.readValue(json, authorList);
@@ -87,9 +114,13 @@ class AuthorsArrayDeserializerTest {
 
     @Test
     void deserializeTest_InvalidJson() {
-        json = "[\n" +
-                "  \"" + FIRST_AUTHOR_FIRST_NAME + " " + FIRST_AUTHOR_LAST_NAME + "\",\n" +
-                "]";
+        json = "{\n" +
+                "   \"volumeInfo\": {\n" +
+                "    \"authors\": [\n" +
+                "     \"" + FIRST_AUTHOR_FIRST_NAME+ " " + FIRST_AUTHOR_LAST_NAME + "\",\n" +
+                "    ]\n" +
+                "   }\n" +
+                "}";
 
         JavaType authorList = objectMapper.getTypeFactory().constructCollectionType(List.class, Person.class);
 
