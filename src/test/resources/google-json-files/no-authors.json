@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "id": "FIRST_ID",
+      "volumeInfo": {
+        "title": "FIRST_TITLE",
+        "subtitle": "FIRST_SUBTITLE",
+        "publisher": "FIRST_PUBLISHER",
+        "publishedDate": "2014-02-05",
+        "description": "FIRST_DESCRIPTION",
+        "averageRating": 4.5,
+        "pageCount": 100,
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "FIRST_ISBN"
+          }
+        ],
+        "imageLinks": {
+          "thumbnail": "FIRST_THUMBNAIL"
+        },
+        "language": "FIRST_LANGUAGE",
+        "previewLink": "FIRST_PREVIEW_LINK",
+        "categories": [
+          "FIRST_CATEGORY_NAME",
+          "SECOND_CATEGORY_NAME"
+        ]
+      }
+    },
+    {
+      "id": "SECOND_ID",
+      "volumeInfo": {
+        "title": "SECOND_TITLE",
+        "subtitle": "SECOND_SUBTITLE",
+        "publisher": "SECOND_PUBLISHER",
+        "publishedDate": "2015-05-07",
+        "description": "SECOND_DESCRIPTION",
+        "averageRating": 3.5,
+        "pageCount": 200,
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "SECOND_ISBN"
+          }
+        ],
+        "imageLinks": {
+          "thumbnail": "SECOND_THUMBNAIL"
+        },
+        "language": "SECOND_LANGUAGE",
+        "previewLink": "SECOND_PREVIEW_LINK",
+        "categories": [
+          "FIRST_CATEGORY_NAME"
+        ]
+      }
+    }
+  ]
+}
