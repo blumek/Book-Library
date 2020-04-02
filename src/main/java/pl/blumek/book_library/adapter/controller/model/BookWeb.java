@@ -15,24 +15,26 @@ import static java.util.stream.Collectors.toList;
 
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Builder
-@Value
+@Getter
+@EqualsAndHashCode
 public class BookWeb {
-    String isbn;
-    String title;
-    String subtitle;
-    String publisher;
-    Long publishedDate;
-    String description;
-    int pageCount;
-    String thumbnailUrl;
-    String language;
-    String previewLink;
-    double averageRating;
+    private String isbn;
+    private String title;
+    private String subtitle;
+    private String publisher;
+    private long publishedDate;
+    private String description;
+    private int pageCount;
+    private String thumbnailUrl;
+    private String language;
+    private String previewLink;
+    private double averageRating;
     @Singular
-    List<String> authors;
+    private List<String> authors;
     @Singular
-    List<String> categories;
+    private List<String> categories;
 
     public static BookWeb from(Book book) {
         return BookWeb.builder()
@@ -56,8 +58,8 @@ public class BookWeb {
         return book.getIsbn() == null ? book.getId() : book.getIsbn();
     }
 
-    private static Long getPublishedDate(LocalDate publishedDate) {
-        return publishedDate == null ? null : publishedDate
+    private static long getPublishedDate(LocalDate publishedDate) {
+        return publishedDate == null ? 0 : publishedDate
                 .atStartOfDay(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();
