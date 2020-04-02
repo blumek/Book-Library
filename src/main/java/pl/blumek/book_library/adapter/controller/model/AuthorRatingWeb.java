@@ -1,13 +1,12 @@
 package pl.blumek.book_library.adapter.controller.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Builder
-@Value
+@Getter
+@EqualsAndHashCode
 public class AuthorRatingWeb {
     String author;
     double averageRating;
