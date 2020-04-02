@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.google.common.collect.Lists;
+import pl.blumek.book_library.adapter.repository.converter.AuthorNameConverter;
 import pl.blumek.book_library.domain.entity.Book;
 import pl.blumek.book_library.domain.entity.Category;
 import pl.blumek.book_library.domain.entity.Language;
@@ -168,8 +169,8 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
         return getDateFrom(publishedDateNode.textValue());
     }
 
-    private Optional<LocalDate> getDateFrom(String publishedDateNode) {
-        if (publishedDateNode == null)
+    private Optional<LocalDate> getDateFrom(String date) {
+        if (date == null)
             return Optional.empty();
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
@@ -184,7 +185,7 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
                 .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
                 .toFormatter();
 
-        return Optional.of(LocalDate.parse(publishedDateNode, formatter));
+        return Optional.of(LocalDate.parse(date, formatter));
     }
 
     private Optional<String> getDescription(JsonNode contentNode) {
@@ -248,58 +249,10 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
         if (authorsNode == null)
             return authors;
 
-        for (JsonNode authorNode : authorsNode) {
-            Optional<Person> author = getAuthor(authorNode);
-            author.ifPresent(authors::add);
-        }
+        for (JsonNode authorNode : authorsNode)
+            authors.add(AuthorNameConverter.toAuthor(authorNode.textValue()));
 
         return authors;
-    }
-
-    private Optional<Person> getAuthor(JsonNode authorNode) {
-        Person.PersonBuilder authorBuilder = Person.builder();
-
-        Optional<String> firstName = getAuthorFirstName(authorNode.textValue());
-        if (!firstName.isPresent())
-            return Optional.empty();
-
-        authorBuilder.firstName(firstName.get());
-
-        Optional<String> lastName = getAuthorLastName(authorNode.textValue());
-        lastName.ifPresent(authorBuilder::lastName);
-
-        return Optional.of(authorBuilder.build());
-    }
-
-    private Optional<String> getAuthorFirstName(String authorName) {
-        if (isNameEmpty(authorName))
-            return Optional.empty();
-
-        String firstName = authorName.trim();
-        if (firstName.contains(" "))
-            firstName = getFirstPartOfName(firstName);
-
-        return Optional.of(firstName);
-    }
-
-    private boolean isNameEmpty(String authorName) {
-        return authorName == null || authorName.isEmpty();
-    }
-
-    private String getFirstPartOfName(String firstName) {
-        return firstName.substring(0, firstName.indexOf(' ')).trim();
-    }
-
-    private Optional<String> getAuthorLastName(String authorName) {
-        String lastName = authorName.trim();
-        if (lastName.contains(" "))
-            return Optional.of(getRestOfName(lastName));
-        else
-            return Optional.empty();
-    }
-
-    private String getRestOfName(String lastName) {
-        return lastName.substring(lastName.indexOf(' ')).trim();
     }
 
     private List<Category> getCategories(JsonNode contentNode) {
@@ -309,13 +262,16 @@ public class BookGoogleDeserializer extends StdDeserializer<Book> {
         if (categoriesNode == null)
             return categories;
 
-        for (JsonNode categoryNode : categoriesNode) {
-            categories.add(Category.builder()
-                    .name(categoryNode.textValue())
-                    .build());
-        }
+        for (JsonNode categoryNode : categoriesNode)
+            categories.add(getCategory(categoryNode));
 
         return categories;
+    }
+
+    private Category getCategory(JsonNode categoryNode) {
+        return Category.builder()
+                .name(categoryNode.textValue())
+                .build();
     }
 
 }
