@@ -63,7 +63,7 @@ class RatingControllerTest {
         when(findAuthorRating.findAllAuthorRatings())
                 .thenReturn(Maps.newHashMap());
 
-        assertEquals(Lists.newArrayList(), ratingController.findAllAuthorsRatings());
+        assertIterableEquals(Lists.newArrayList(), ratingController.findAllAuthorsRatings());
     }
 
     @Test
@@ -71,7 +71,7 @@ class RatingControllerTest {
         when(findAuthorRating.findAllAuthorRatings())
                 .thenReturn(ratings);
 
-        assertEquals(Lists.newArrayList(secondAuthorRating, firstAuthorRating),
+        assertIterableEquals(Lists.newArrayList(secondAuthorRating, firstAuthorRating),
                 ratingController.findAllAuthorsRatings());
     }
 }

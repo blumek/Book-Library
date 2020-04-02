@@ -1,7 +1,6 @@
 package pl.blumek.book_library.usecase;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.domain.entity.Book;
@@ -11,7 +10,10 @@ import pl.blumek.book_library.domain.port.BookRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.*;
 
 class FindBookTest {
@@ -99,7 +101,7 @@ class FindBookTest {
 
         List<Book> books = findBook.findAllByCategoryName(CATEGORY_NAME);
 
-        assertEquals(Sets.newHashSet(bookWithIsbn, bookWithoutIsbn), Sets.newHashSet(books));
+        assertThat(books, containsInAnyOrder(bookWithIsbn, bookWithoutIsbn));
     }
 
     @Test
@@ -109,6 +111,6 @@ class FindBookTest {
 
         List<Book> books = findBook.findAllByCategoryName(CATEGORY_NAME_NOT_EXISTS);
 
-        assertEquals(Lists.newArrayList(), books);
+        assertIterableEquals(Lists.newArrayList(), books);
     }
 }

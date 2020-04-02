@@ -130,21 +130,21 @@ class InMemoryBookRepositoryTest {
 
     @Test
     void findAllByCategoryNameTest_NoBooksGivenCategoryName() {
-        assertEquals(Lists.newArrayList(), repository.findAllByCategoryName(NOT_EXISTING_CATEGORY_NAME));
+        assertIterableEquals(Lists.newArrayList(), repository.findAllByCategoryName(NOT_EXISTING_CATEGORY_NAME));
     }
 
     @Test
     void findAllByCategoryNameTest_TwoWithGivenCategoryName() {
-        assertEquals(Lists.newArrayList(firstBook, secondBook), repository.findAllByCategoryName(CATEGORY_NAME));
+        assertIterableEquals(Lists.newArrayList(firstBook, secondBook), repository.findAllByCategoryName(CATEGORY_NAME));
     }
 
     @Test
     void findAllByAuthorNameTest_NoBooksWithGivenAuthorName() {
-        assertEquals(Lists.newArrayList(), repository.findAllByAuthorName(NOT_EXISTING_AUTHOR_FULL_NAME));
+        assertIterableEquals(Lists.newArrayList(), repository.findAllByAuthorName(NOT_EXISTING_AUTHOR_FULL_NAME));
     }
 
     @Test
     void findAllByAuthorNameTest_TwoWithGivenAuthorName() {
-        assertEquals(Lists.newArrayList(firstBook, secondBook), repository.findAllByAuthorName(AUTHOR_FULL_NAME));
+        assertIterableEquals(Lists.newArrayList(firstBook, secondBook), repository.findAllByAuthorName(AUTHOR_FULL_NAME));
     }
 }

@@ -1,7 +1,6 @@
 package pl.blumek.book_library.adapter.repository;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.domain.entity.Person;
@@ -12,6 +11,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 class InMemoryAuthorRepositoryTest {
     private static final String GENERATED_ID = "GENERATED_ID";
@@ -46,27 +47,21 @@ class InMemoryAuthorRepositoryTest {
     void varargsConstructorTest_TwoAuthors() {
         repository = new InMemoryAuthorRepository(idGenerator, firstAuthor, secondAuthor);
 
-        List<Person> authors = repository.findAll();
-
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor), Sets.newHashSet(authors));
+        assertThat(repository.findAll(), containsInAnyOrder(firstAuthor, secondAuthor));
     }
 
     @Test
     void listConstructorTest_TwoAuthors() {
         repository = new InMemoryAuthorRepository(idGenerator, Lists.newArrayList(firstAuthor, secondAuthor));
 
-        List<Person> authors = repository.findAll();
-
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor), Sets.newHashSet(authors));
+        assertThat(repository.findAll(), containsInAnyOrder(firstAuthor, secondAuthor));
     }
 
     @Test
     void streamConstructorTest_TwoAuthors() {
         repository = new InMemoryAuthorRepository(idGenerator, Stream.of(firstAuthor, secondAuthor));
 
-        List<Person> authors = repository.findAll();
-
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor), Sets.newHashSet(authors));
+        assertThat(repository.findAll(), containsInAnyOrder(firstAuthor, secondAuthor));
     }
 
     @Test
@@ -88,12 +83,11 @@ class InMemoryAuthorRepositoryTest {
     @Test
     void findAllTest_EmptyRepository() {
         repository = new InMemoryAuthorRepository(idGenerator);
-        assertEquals(Lists.newArrayList(), repository.findAll());
+        assertIterableEquals(Lists.newArrayList(), repository.findAll());
     }
 
     @Test
     void findAllTest_TwoAuthorsInRepository() {
-        List<Person> authors = repository.findAll();
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor), Sets.newHashSet(authors));
+        assertThat(repository.findAll(), containsInAnyOrder(firstAuthor, secondAuthor));
     }
 }

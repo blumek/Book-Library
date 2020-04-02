@@ -1,7 +1,6 @@
 package pl.blumek.book_library.adapter.reader;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.domain.entity.Person;
@@ -10,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 class JsonFileAuthorsFromBookGoogleReaderTest {
     private static final String FILE_NOT_EXISTS = "FILE_NOT_EXISTS";
@@ -63,7 +64,7 @@ class JsonFileAuthorsFromBookGoogleReaderTest {
         jsonFile = getFile(TWO_BOOKS_PATH);
         reader = new JsonFileAuthorsFromBookGoogleReader(jsonFile);
 
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor), Sets.newHashSet(reader.read()));
+        assertThat(reader.read(), containsInAnyOrder(firstAuthor, secondAuthor));
     }
 
     @Test
@@ -71,7 +72,7 @@ class JsonFileAuthorsFromBookGoogleReaderTest {
         jsonFile = getFile(THREE_AUTHORS_PATH);
         reader = new JsonFileAuthorsFromBookGoogleReader(jsonFile);
 
-        assertEquals(Sets.newHashSet(firstAuthor, secondAuthor, thirdAuthor), Sets.newHashSet(reader.read()));
+        assertThat(reader.read(), containsInAnyOrder(firstAuthor, secondAuthor, thirdAuthor));
     }
 
     @Test
@@ -79,7 +80,7 @@ class JsonFileAuthorsFromBookGoogleReaderTest {
         jsonFile = getFile(NO_AUTHORS_PATH);
         reader = new JsonFileAuthorsFromBookGoogleReader(jsonFile);
 
-        assertEquals(Lists.newArrayList(), reader.read());
+        assertIterableEquals(Lists.newArrayList(), reader.read());
     }
 
     @Test

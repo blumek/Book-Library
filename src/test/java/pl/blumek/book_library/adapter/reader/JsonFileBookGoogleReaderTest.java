@@ -1,7 +1,6 @@
 package pl.blumek.book_library.adapter.reader;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.domain.entity.Book;
@@ -13,8 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class JsonFileBookGoogleReaderTest {
     private static final String FILE_NOT_EXISTS = "FILE_NOT_EXISTS";
@@ -126,7 +126,7 @@ class JsonFileBookGoogleReaderTest {
         jsonFile = getFile(TWO_BOOKS_PATH);
         reader = new JsonFileBookGoogleReader(jsonFile);
 
-        assertEquals(Sets.newHashSet(firstBook, secondBook), Sets.newHashSet(reader.read()));
+        assertThat(reader.read(), containsInAnyOrder(firstBook, secondBook));
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -140,7 +140,7 @@ class JsonFileBookGoogleReaderTest {
         jsonFile = getFile(TWO_BOOKS_WITH_EXTRA_NODES_PATH);
         reader = new JsonFileBookGoogleReader(jsonFile);
 
-        assertEquals(Sets.newHashSet(firstBook, secondBook), Sets.newHashSet(reader.read()));
+        assertThat(reader.read(), containsInAnyOrder(firstBook, secondBook));
     }
 
     @Test
@@ -155,7 +155,7 @@ class JsonFileBookGoogleReaderTest {
         jsonFile = getFile(EMPTY_COLLECTION_PATH);
         reader = new JsonFileBookGoogleReader(jsonFile);
 
-        assertEquals(Lists.newArrayList(), reader.read());
+        assertIterableEquals(Lists.newArrayList(), reader.read());
     }
 
     @Test

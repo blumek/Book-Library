@@ -1,7 +1,6 @@
 package pl.blumek.book_library.adapter.controller;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.adapter.controller.model.BookWeb;
@@ -13,6 +12,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 class BookControllerTest {
     private static final String BOOK_ISBN = "BOOK_ISBN";
@@ -87,7 +88,7 @@ class BookControllerTest {
         when(findBook.findAllByCategoryName(anyString()))
                 .thenReturn(Lists.newArrayList(book, anotherBook));
 
-        assertIterableEquals(Sets.newHashSet(expectedBook, anotherExpectedBook),
-                Sets.newHashSet(bookController.findAllByCategoryName(CATEGORY_NAME)));
+        assertThat(bookController.findAllByCategoryName(CATEGORY_NAME),
+                containsInAnyOrder(expectedBook, anotherExpectedBook));
     }
 }
