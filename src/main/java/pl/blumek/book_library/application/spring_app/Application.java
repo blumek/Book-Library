@@ -6,12 +6,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import picocli.CommandLine;
 import pl.blumek.book_library.adapter.id_generator.UUIDGenerator;
+import pl.blumek.book_library.adapter.reader.JsonFileAuthorsFromBookGoogleReader;
 import pl.blumek.book_library.adapter.reader.JsonFileBookGoogleReader;
 import pl.blumek.book_library.adapter.repository.InMemoryAuthorRepository;
 import pl.blumek.book_library.adapter.repository.InMemoryBookRepository;
 import pl.blumek.book_library.application.spring_app.command.DataSourceCommand;
 import pl.blumek.book_library.config.Config;
 import pl.blumek.book_library.domain.entity.Book;
+import pl.blumek.book_library.domain.entity.Person;
+import pl.blumek.book_library.domain.port.AuthorReader;
 import pl.blumek.book_library.domain.port.AuthorRepository;
 import pl.blumek.book_library.domain.port.BookReader;
 import pl.blumek.book_library.domain.port.BookRepository;
@@ -53,7 +56,9 @@ public class Application {
         BookReader bookReader = new JsonFileBookGoogleReader(jsonFile);
         List<Book> books = bookReader.read();
         bookRepository = new InMemoryBookRepository(UUIDGenerator.create(), books);
-        authorRepository = new InMemoryAuthorRepository(UUIDGenerator.create());
+        AuthorReader authorReader = new JsonFileAuthorsFromBookGoogleReader(jsonFile);
+        List<Person> authors = authorReader.read();
+        authorRepository = new InMemoryAuthorRepository(UUIDGenerator.create(), authors);
     }
 
     private static void handleDefault() {
