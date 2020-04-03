@@ -38,7 +38,11 @@ public final class InMemoryAuthorRepository implements AuthorRepository {
     }
 
     private String getId(Person person) {
-        return hasId(person) ? person.getId() : idGenerator.generate();
+        return hasId(person) ? person.getId() : generateId();
+    }
+
+    private String generateId() {
+        return idGenerator.generate();
     }
 
     private boolean hasId(Person person) {
