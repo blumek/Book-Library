@@ -10,28 +10,22 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
-public final class InMemoryBookRepository implements BookRepository {
-    private final Map<String, Book> inMemoryDb;
-    private final IdGenerator idGenerator;
-
-    public InMemoryBookRepository(IdGenerator idGenerator, Book... books) {
-        this(idGenerator, Arrays.stream(books));
+public final class InMemoryBookRepository extends InMemoryRepository<Book> implements BookRepository {
+    public InMemoryBookRepository(IdGenerator idGenerator, Book... t) {
+        super(idGenerator, t);
     }
 
-    public InMemoryBookRepository(IdGenerator idGenerator, List<Book> books) {
-        this(idGenerator, books.stream());
+    public InMemoryBookRepository(IdGenerator idGenerator, List<Book> t) {
+        super(idGenerator, t);
     }
 
     public InMemoryBookRepository(IdGenerator idGenerator, Stream<Book> bookStream) {
-        this.idGenerator = idGenerator;
-        this.inMemoryDb = bookStream
-                .map(this::bookWithAssignedId)
-                .collect(toMap(Book::getId, book -> book));
+        super(idGenerator, bookStream);
     }
 
-    private Book bookWithAssignedId(Book book) {
+    @Override
+    Book entityWithAssignedId(Book book) {
         return book.toBuilder()
                 .id(getId(book))
                 .build();
@@ -41,12 +35,13 @@ public final class InMemoryBookRepository implements BookRepository {
         return hasId(book) ? book.getId() : generateId();
     }
 
-    private String generateId() {
-        return idGenerator.generate();
-    }
-
     private boolean hasId(Book book) {
         return book.getId() != null && !book.getId().isEmpty();
+    }
+
+    @Override
+    String getEntityId(Book book) {
+        return book.getId();
     }
 
     @Override
