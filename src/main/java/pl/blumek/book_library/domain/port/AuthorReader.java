@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AuthorReader {
-    public List<Person> read() throws IOException;
+    List<Person> read() throws IOException;
 }
