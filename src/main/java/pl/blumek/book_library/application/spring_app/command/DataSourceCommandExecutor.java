@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import picocli.CommandLine;
+import picocli.CommandLine.ParameterException;
 import pl.blumek.book_library.adapter.id_generator.UUIDGenerator;
 import pl.blumek.book_library.adapter.reader.JsonFileAuthorsFromBookGoogleReader;
 import pl.blumek.book_library.adapter.reader.JsonFileBookGoogleReader;
@@ -53,9 +54,13 @@ public class DataSourceCommandExecutor {
         }
     }
 
-    private void parseArgs(String[] args, DataSourceCommand dataSourceCommand) {
+    private void parseArgs(String[] args, DataSourceCommand dataSourceCommand) throws IOException {
         CommandLine commandLine = new CommandLine(dataSourceCommand);
-        commandLine.parseArgs(args);
+        try {
+            commandLine.parseArgs(args);
+        } catch (ParameterException exception) {
+            throw new IOException("Wrong argument/arguments: " + String.join(" ", args));
+        }
     }
 
     private void handleGoogleBooks() throws GeneralSecurityException, IOException {
