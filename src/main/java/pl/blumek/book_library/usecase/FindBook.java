@@ -14,10 +14,18 @@ public final class FindBook {
     }
 
     public Optional<Book> findByIsbn(String isbn) {
-        Optional<Book> book = repository.findByIsbn(isbn);
+        Optional<Book> book = getBookWithIsbn(isbn);
         if (!book.isPresent())
-            book = repository.findById(isbn);
+            book = getBookWithId(isbn);
         return book;
+    }
+
+    private Optional<Book> getBookWithIsbn(String isbn) {
+        return repository.findByIsbn(isbn);
+    }
+
+    private Optional<Book> getBookWithId(String isbn) {
+        return repository.findById(isbn);
     }
 
     public List<Book> findAllByCategoryName(String categoryName) {
