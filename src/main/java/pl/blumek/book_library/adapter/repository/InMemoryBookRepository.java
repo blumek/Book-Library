@@ -1,6 +1,8 @@
 package pl.blumek.book_library.adapter.repository;
 
 import pl.blumek.book_library.domain.entity.Book;
+import pl.blumek.book_library.domain.entity.Category;
+import pl.blumek.book_library.domain.entity.Person;
 import pl.blumek.book_library.domain.port.BookRepository;
 import pl.blumek.book_library.domain.port.IdGenerator;
 
@@ -36,7 +38,11 @@ public final class InMemoryBookRepository implements BookRepository {
     }
 
     private String getId(Book book) {
-        return hasId(book) ? book.getId() : idGenerator.generate();
+        return hasId(book) ? book.getId() : generateId();
+    }
+
+    private String generateId() {
+        return idGenerator.generate();
     }
 
     private boolean hasId(Book book) {
@@ -59,15 +65,23 @@ public final class InMemoryBookRepository implements BookRepository {
     public List<Book> findAllByCategoryName(String categoryName) {
         return inMemoryDb.values().stream()
                 .filter(book -> book.getCategories().stream()
-                        .anyMatch(category -> categoryName.equals(category.getName())))
+                        .anyMatch(category -> equalCategoryNames(categoryName, category)))
                 .collect(toList());
+    }
+
+    private boolean equalCategoryNames(String categoryName, Category category) {
+        return categoryName.equalsIgnoreCase(category.getName());
     }
 
     @Override
     public List<Book> findAllByAuthorName(String authorName) {
         return inMemoryDb.values().stream()
                 .filter(book -> book.getAuthors().stream()
-                        .anyMatch(author -> authorName.equals(author.getFullName())))
+                        .anyMatch(author -> equalAuthorNames(authorName, author)))
                 .collect(toList());
+    }
+
+    private boolean equalAuthorNames(String authorName, Person author) {
+        return authorName.equalsIgnoreCase(author.getFullName());
     }
 }
