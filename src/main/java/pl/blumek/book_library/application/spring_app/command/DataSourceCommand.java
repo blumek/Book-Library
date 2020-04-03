@@ -12,7 +12,7 @@ import java.util.Optional;
         name = "datasource",
         description = "Select data source for application"
 )
-public class DataSourceCommand {
+class DataSourceCommand {
     private File jsonFile;
 
     @Option(names = { "-gb", "--googleBooks" })
