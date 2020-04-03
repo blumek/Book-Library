@@ -29,7 +29,7 @@ public final class FindAuthorRating {
     public Map<Person, Double> findAllAuthorRatings() {
         HashMap<Person, Double> ratings = Maps.newHashMap();
 
-        List<Person> authors = authorRepository.findAll();
+        List<Person> authors = getAllAuthors();
         for (Person author : authors) {
             OptionalDouble averageRating = getAverageRatingOfAuthor(author);
 
@@ -38,6 +38,10 @@ public final class FindAuthorRating {
         }
 
         return ratings;
+    }
+
+    private List<Person> getAllAuthors() {
+        return authorRepository.findAll();
     }
 
     private OptionalDouble getAverageRatingOfAuthor(Person author) {
@@ -49,7 +53,11 @@ public final class FindAuthorRating {
         if (ratingsOfBooks.isEmpty())
             return OptionalDouble.empty();
 
-        return OptionalDouble.of(averageRatingCalculator.calculate(ratingsOfBooks));
+        return OptionalDouble.of(calculate(ratingsOfBooks));
+    }
+
+    private double calculate(List<Double> ratingsOfBooks) {
+        return averageRatingCalculator.calculate(ratingsOfBooks);
     }
 
     private List<Book> getAllAuthorBooks(Person author) {
