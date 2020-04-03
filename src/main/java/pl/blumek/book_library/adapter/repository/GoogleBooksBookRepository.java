@@ -40,6 +40,7 @@ public class GoogleBooksBookRepository implements BookRepository {
             return Optional.empty();
 
         return requestedBooks.stream()
+                .filter(volume -> id.equalsIgnoreCase(volume.getId()))
                 .findFirst();
     }
 
