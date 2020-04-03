@@ -15,12 +15,21 @@ public class Person {
 
     public String getFullName() {
         StringBuilder nameBuilder = new StringBuilder();
-        if (firstName != null)
+        if (isFirstNameAvailable())
             nameBuilder.append(firstName);
 
-        if (lastName != null)
-            nameBuilder.append(" ").append(lastName);
+        if (isLastNameAvailable())
+            nameBuilder.append(" ")
+                    .append(lastName);
 
         return nameBuilder.toString();
+    }
+
+    private boolean isFirstNameAvailable() {
+        return firstName != null;
+    }
+
+    private boolean isLastNameAvailable() {
+        return lastName != null;
     }
 }
