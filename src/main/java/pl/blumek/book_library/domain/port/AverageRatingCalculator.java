@@ -2,7 +2,8 @@ package pl.blumek.book_library.domain.port;
 
 
 import java.util.Collection;
+import java.util.OptionalDouble;
 
 public interface AverageRatingCalculator {
-    double calculate(Collection<Double> ratings);
+    OptionalDouble calculate(Collection<Double> ratings);
 }

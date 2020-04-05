@@ -3,18 +3,19 @@ package pl.blumek.book_library.adapter.average_rating;
 import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 
 import java.util.Collection;
+import java.util.OptionalDouble;
 
 public class ArithmeticMeanAverageRatingCalculator implements AverageRatingCalculator {
 
     @Override
-    public double calculate(Collection<Double> ratings) {
+    public OptionalDouble calculate(Collection<Double> ratings) {
         if (ratings.isEmpty())
-            throw new IllegalArgumentException("Empty lists passed");
+            return OptionalDouble.empty();
 
         double sumOfRatings = ratings.stream()
                 .mapToDouble(value -> value)
                 .sum();
 
-        return sumOfRatings / ratings.size();
+        return OptionalDouble.of(sumOfRatings / ratings.size());
     }
 }

@@ -32,9 +32,7 @@ public final class FindAuthorRating {
         List<Person> authors = getAllAuthors();
         for (Person author : authors) {
             OptionalDouble averageRating = getAverageRatingOfAuthor(author);
-
-            if (averageRating.isPresent())
-                ratings.put(author, averageRating.getAsDouble());
+            averageRating.ifPresent(rating -> ratings.put(author, rating));
         }
 
         return ratings;
@@ -50,13 +48,11 @@ public final class FindAuthorRating {
             return OptionalDouble.empty();
 
         List<Double> ratingsOfBooks = getAllBookAverageRatings(authorBooks);
-        if (ratingsOfBooks.isEmpty())
-            return OptionalDouble.empty();
 
-        return OptionalDouble.of(calculate(ratingsOfBooks));
+        return calculate(ratingsOfBooks);
     }
 
-    private double calculate(List<Double> ratingsOfBooks) {
+    private OptionalDouble calculate(List<Double> ratingsOfBooks) {
         return averageRatingCalculator.calculate(ratingsOfBooks);
     }
 

@@ -11,6 +11,7 @@ import pl.blumek.book_library.domain.port.AverageRatingCalculator;
 import pl.blumek.book_library.domain.port.BookRepository;
 
 import java.util.Map;
+import java.util.OptionalDouble;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -91,10 +92,10 @@ class FindAuthorRatingTest {
                 .thenReturn(Lists.newArrayList(thirdBook));
 
         when(averageRatingCalculator.calculate(Lists.newArrayList(FIRST_BOOK_AVERAGE_RATING, SECOND_BOOK_AVERAGE_RATING)))
-                .thenReturn(FIRST_AUTHOR_AVERAGE_RATING);
+                .thenReturn(OptionalDouble.of(FIRST_AUTHOR_AVERAGE_RATING));
 
         when(averageRatingCalculator.calculate(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
-                .thenReturn(SECOND_AUTHOR_AVERAGE_RATING);
+                .thenReturn(OptionalDouble.of(SECOND_AUTHOR_AVERAGE_RATING));
 
         Map<Person, Double> authorRatings = findAuthorRating.findAllAuthorRatings();
 
@@ -126,7 +127,7 @@ class FindAuthorRatingTest {
                 .thenReturn(Lists.newArrayList(thirdBook, bookWithoutAverageRating));
 
         when(averageRatingCalculator.calculate(Lists.newArrayList(THIRD_BOOK_AVERAGE_RATING)))
-                .thenReturn(SECOND_AUTHOR_AVERAGE_RATING);
+                .thenReturn(OptionalDouble.of(SECOND_AUTHOR_AVERAGE_RATING));
 
         Map<Person, Double> authorRatings = findAuthorRating.findAllAuthorRatings();
 

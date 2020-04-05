@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.OptionalDouble;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArithmeticMeanAverageRatingCalculatorTest {
@@ -16,15 +18,14 @@ class ArithmeticMeanAverageRatingCalculatorTest {
 
     @Test
     void getAverageRatingOfTest_fourRatings() {
-        double averageRating = arithmeticMeanAverageRating.calculate(
+        OptionalDouble averageRating = arithmeticMeanAverageRating.calculate(
                 Lists.newArrayList(1.0, 2.0, 3.0, 4.0));
 
-        assertEquals(2.5, averageRating);
+        assertEquals(2.5, averageRating.getAsDouble());
     }
 
     @Test
     void getAverageRatingOfTest_emptyList() {
-        assertThrows(IllegalArgumentException.class,
-                () ->  arithmeticMeanAverageRating.calculate(Lists.newArrayList()));
+        assertEquals(OptionalDouble.empty(), arithmeticMeanAverageRating.calculate(Lists.newArrayList()));
     }
 }
