@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.blumek.book_library.adapter.controller.BookController;
 import pl.blumek.book_library.adapter.controller.model.BookWeb;
-import pl.blumek.book_library.domain.exception.BookNotFoundException;
 
 import java.util.List;
 
@@ -24,12 +23,8 @@ public class SpringBookController {
 
     @GetMapping("/books/{isbn}")
     public BookWeb findByIsbn(@PathVariable String isbn) {
-        try {
-            return bookController.findByIsbn(isbn);
-        } catch (BookNotFoundException exception) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, exception.getMessage());
-        }
+        return bookController.findByIsbn(isbn).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Book not found. ISBN: " + isbn));
     }
 
     @GetMapping("/books")

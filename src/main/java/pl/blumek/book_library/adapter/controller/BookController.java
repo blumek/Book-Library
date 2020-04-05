@@ -1,8 +1,6 @@
 package pl.blumek.book_library.adapter.controller;
 
 import pl.blumek.book_library.adapter.controller.model.BookWeb;
-import pl.blumek.book_library.domain.entity.Book;
-import pl.blumek.book_library.domain.exception.BookNotFoundException;
 import pl.blumek.book_library.usecase.FindBook;
 
 import java.util.List;
@@ -17,9 +15,9 @@ public class BookController {
         this.findBook = findBook;
     }
 
-    public BookWeb findByIsbn(String isbn) {
-        Optional<Book> book = findBook.findByIsbn(isbn);
-        return BookWeb.from(book.orElseThrow(() -> new BookNotFoundException(isbn)));
+    public Optional<BookWeb> findByIsbn(String isbn) {
+        return findBook.findByIsbn(isbn)
+                .map(BookWeb::from);
     }
 
     public List<BookWeb> findAllByCategoryName(String categoryName) {

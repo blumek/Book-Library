@@ -5,15 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.adapter.controller.model.BookWeb;
 import pl.blumek.book_library.domain.entity.Book;
-import pl.blumek.book_library.domain.exception.BookNotFoundException;
 import pl.blumek.book_library.usecase.FindBook;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
 
 class BookControllerTest {
     private static final String BOOK_ISBN = "BOOK_ISBN";
@@ -61,7 +61,7 @@ class BookControllerTest {
         when(findBook.findByIsbn(anyString()))
                 .thenReturn(Optional.ofNullable(book));
 
-        assertEquals(expectedBook, bookController.findByIsbn(BOOK_ISBN));
+        assertEquals(Optional.of(expectedBook), bookController.findByIsbn(BOOK_ISBN));
     }
 
     @Test
@@ -69,10 +69,7 @@ class BookControllerTest {
         when(findBook.findByIsbn(anyString()))
                 .thenReturn(Optional.empty());
 
-        Exception thrown = assertThrows(BookNotFoundException.class,
-                () -> bookController.findByIsbn(BOOK_ISBN));
-
-        assertTrue(thrown.getMessage().contains(BOOK_ISBN));
+        assertEquals(Optional.empty(), bookController.findByIsbn(BOOK_ISBN));
     }
 
     @Test

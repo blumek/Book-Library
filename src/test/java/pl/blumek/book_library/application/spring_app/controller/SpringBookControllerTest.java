@@ -5,14 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.blumek.book_library.adapter.controller.BookController;
 import pl.blumek.book_library.adapter.controller.model.BookWeb;
-import pl.blumek.book_library.domain.exception.BookNotFoundException;
 
-import static io.restassured.http.ContentType.*;
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
-import static org.mockito.Mockito.*;
+import java.util.Optional;
+
+import static io.restassured.http.ContentType.JSON;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 
 class SpringBookControllerTest {
@@ -38,7 +40,7 @@ class SpringBookControllerTest {
                 .build();
 
         when(bookController.findByIsbn(FIRST_ISBN))
-                .thenReturn(bookWeb);
+                .thenReturn(Optional.of(bookWeb));
 
         given()
                 .standaloneSetup(springBookController)
@@ -54,7 +56,7 @@ class SpringBookControllerTest {
     @Test
     void findByIsbnTest_noBookWithGivenIsbnOrId() {
         when(bookController.findByIsbn(anyString()))
-                .thenThrow(BookNotFoundException.class);
+                .thenReturn(Optional.empty());
 
         given()
                 .standaloneSetup(springBookController)
