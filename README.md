@@ -1,6 +1,6 @@
 # Book Library Application
 
-Book library application is a recruitment task for Cognifide.
+Sample Book library application.
 Application provides REST API that allows:
 - Searching book by ISBN/ID
 - Searching books by categories they belong to
